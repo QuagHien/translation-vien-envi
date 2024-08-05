@@ -193,12 +193,12 @@ class MT5DecoderModel(MT5PreTrainedModel):
 class SMT5Model(nn.Module):
     def __init__(self):
         super(SMT5Model, self).__init__()
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.embed_fusion = EmbedFusion(fusion_type='attention').to(self.device)
-        self.sent_model = MT5EncoderModel.from_pretrained('wanhin/msim-mt5-luat-atien').to(self.device)
-        self.encoder_model = MT5EncoderModel.from_pretrained('google/mt5-base').to(self.device)
-        self.decoder_model = MT5DecoderModel.from_pretrained('google/mt5-base').to(self.device)
+        self.embed_fusion = EmbedFusion(fusion_type='attention')
+        self.sent_model = MT5EncoderModel.from_pretrained('wanhin/msim-mt5-luat-atien')
+        self.encoder_model = MT5EncoderModel.from_pretrained('google/mt5-base')
+        self.decoder_model = MT5DecoderModel.from_pretrained('google/mt5-base')
         self.softmax = nn.Softmax(dim=-1)
+        self.config = MT5Config.from_pretrained('google/mt5-base')
 
         self.remove_shared()
         
